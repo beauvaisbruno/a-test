@@ -91,6 +91,7 @@ const PasswordMain = ({
                         passwords={decryptedPasswords}
                         editing={editing}
                         onSelectPassword={handleSelectPassword}
+                        selectedPasswordId={selectedPasswordId}
                     />
                 ) : (
                     <NoPasswords />

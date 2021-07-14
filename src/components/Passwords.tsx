@@ -10,9 +10,10 @@ interface Props {
     editing: boolean;
     passwords: { [key: string]: Password };
     onSelectPassword: (id: string) => void;
+    selectedPasswordId: string | null;
 }
 
-function Passwords({ editing, passwords, onSelectPassword }: Props) {
+function Passwords({ editing, passwords, onSelectPassword, selectedPasswordId }: Props) {
     function renderListItem(password: Password) {
         function handleClick() {
             onSelectPassword(password.id);
@@ -22,6 +23,7 @@ function Passwords({ editing, passwords, onSelectPassword }: Props) {
             <PasswordListItem
                 key={password.name}
                 name={password.name}
+                highlight={password.id === selectedPasswordId}
                 disabled={editing}
                 onClick={handleClick}
                 vulnerable={password.value.length < 2}
