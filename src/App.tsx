@@ -9,21 +9,18 @@ import PasswordLockedContainer from './components/PasswordLockedContainer';
 import PasswordMainContainer from './components/PasswordMainContainer';
 
 function duplicateUrlsAmongPasswords(passwords: { [id: string]: Password }) {
-
-    const duplicatedUrls: { [url: string]:Array<string> } = {};
-    const urlToPasswordId: { [url: string]:string } = {};
-    Object.values(passwords).forEach(password => {
-        password.url.forEach(url => {
-            if (Object.keys(urlToPasswordId).includes(url)){
-                if (!duplicatedUrls[url])
-                    duplicatedUrls[url] = [urlToPasswordId[url]+""];
-                duplicatedUrls[url].push(password.id+"");
+    const duplicatedUrls: { [url: string]: Array<string> } = {};
+    const urlToPasswordId: { [url: string]: string } = {};
+    Object.values(passwords).forEach((password) => {
+        password.url.forEach((url) => {
+            if (Object.keys(urlToPasswordId).includes(url)) {
+                if (!duplicatedUrls[url]) duplicatedUrls[url] = [urlToPasswordId[url] + ''];
+                duplicatedUrls[url].push(password.id + '');
             }
-            urlToPasswordId[url] = password.id+"";
-        })
+            urlToPasswordId[url] = password.id + '';
+        });
     });
-    if (!Object.keys(duplicatedUrls).length)
-        return null;
+    if (!Object.keys(duplicatedUrls).length) return null;
     return duplicatedUrls;
 }
 
@@ -112,9 +109,11 @@ function App() {
 
         if (duplicateUrls) {
             let message = '';
-            Object.entries(duplicateUrls).forEach(([url, passwordIds]) =>{
-                const passwordNames = passwordIds.map((passwordId)=> '"'+nextPasswords[passwordId].name+'"').join(', ');
-                message += `Duplicate url ${url} found for passwords ${passwordNames}.\r\n`
+            Object.entries(duplicateUrls).forEach(([url, passwordIds]) => {
+                const passwordNames = passwordIds
+                    .map((passwordId) => '"' + nextPasswords[passwordId].name + '"')
+                    .join(', ');
+                message += `Duplicate url ${url} found for passwords ${passwordNames}.\r\n`;
             });
             window.alert(message);
         }
