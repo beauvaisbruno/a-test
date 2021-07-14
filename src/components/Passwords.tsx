@@ -21,7 +21,7 @@ function Passwords({ editing, passwords, onSelectPassword, selectedPasswordId }:
 
         return (
             <PasswordListItem
-                key={password.name}
+                key={password.id}
                 name={password.name}
                 highlight={password.id === selectedPasswordId}
                 disabled={editing}

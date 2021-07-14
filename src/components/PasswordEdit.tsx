@@ -11,6 +11,7 @@ import ListItem from '../atoms/ListItem';
 import clsx from 'clsx';
 import TextArea from '../atoms/TextArea';
 import { Password } from '../models';
+import { isSpaceOrEnter } from '../helpers';
 
 interface UrlListProps {
     urls: Array<string>;
@@ -23,7 +24,14 @@ const UrlList = React.memo(({ urls, onDelete }: UrlListProps) => {
             {urls?.map((urlEntry, index) => (
                 <ListItem key={index} dense className={classes.urlListItem}>
                     <input readOnly autoFocus value={urlEntry} />
-                    <Icon onClick={() => onDelete(index)} size="small" className="fas fa-times" />
+                    <Icon
+                        onKeyDown={(e) => isSpaceOrEnter(e) && onDelete(index)}
+                        tabIndex={0}
+                        role="button"
+                        onClick={() => onDelete(index)}
+                        size="small"
+                        className="fas fa-times"
+                    />
                 </ListItem>
             ))}
             {urls?.length === 0 && (

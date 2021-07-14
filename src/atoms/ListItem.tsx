@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 
 import classes from './ListItem.module.css';
+import { isSpaceOrEnter } from '../helpers';
 
 interface Props extends React.ComponentPropsWithoutRef<'li'> {
     clickable?: boolean;
     dense?: boolean;
     highlight?: boolean;
+    onClick?: () => void;
 }
 
 function ListItem({ className, clickable, dense, onClick, highlight, ...rest }: Props) {
@@ -28,11 +30,21 @@ function ListItem({ className, clickable, dense, onClick, highlight, ...rest }: 
         }
     }, [highlight]);
 
-    function handleClick(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
-        onClick && onClick(e);
+    function handleClick() {
+        onClick && onClick();
     }
 
-    return <li ref={elementRef} className={rootClassName} onClick={handleClick} {...rest} />;
+    return (
+        <li
+            onKeyDown={(e) => isSpaceOrEnter(e) && onClick && onClick()}
+            tabIndex={onClick ? 0 : -1}
+            role="button"
+            ref={elementRef}
+            className={rootClassName}
+            onClick={handleClick}
+            {...rest}
+        />
+    );
 }
 
 export default ListItem;
