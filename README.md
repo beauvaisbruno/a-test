@@ -48,13 +48,13 @@ This section describes the functionality of the application if it were working a
 ## Enhancement Ideas
 
 - PasswordEdit is not typed. Convert the file to typescript.
-
+  - Done
 - Consider keyboard navigation throughout the application, as well as other accessibility concerns.
   - Add navigation using tab through the passwords list and the urls list
 - Improve the aesthetic aspect of the UI.
 
 - PasswordEdit and PasswordView seem to have some code duplication, especially in terms of layout and css. Find a way to abstract that into some shared code.
-
+  - Rename passwordEdit.module.css to passwordArea.module.cd and delete passwordView.module.css
 - Implement encryption for the locally stored passwords based on the master password. (crypto related)
-
+  - Done
 - Implement 'change password' feature. (crypto related)

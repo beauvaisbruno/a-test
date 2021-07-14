@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 import Icon from '../atoms/Icon';
 import LabelledIconButton from './LabelledIconButton';
-import classes from './PasswordEdit.module.css';
+import classes from './PasswordArea.module.css';
 import Labelled from '../atoms/Labelled';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';

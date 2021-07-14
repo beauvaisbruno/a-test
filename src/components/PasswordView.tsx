@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './PasswordView.module.css';
+import classes from './PasswordArea.module.css';
 import Icon from '../atoms/Icon';
 import Labelled from '../atoms/Labelled';
 import LabelledIconButton from './LabelledIconButton';
