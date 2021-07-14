@@ -16,8 +16,8 @@ function ListItem({ className, clickable, dense, onClick, highlight, ...rest }: 
         [classes.dense]: dense,
     });
 
-    useEffect(()=>{
-        if (!elementRef.current){
+    useEffect(() => {
+        if (!elementRef.current) {
             return;
         }
         if (highlight && !elementRef.current.classList.contains(classes.selected)) {
@@ -26,8 +26,7 @@ function ListItem({ className, clickable, dense, onClick, highlight, ...rest }: 
         if (!highlight && elementRef.current.classList.contains(classes.selected)) {
             elementRef.current.classList.remove(classes.selected);
         }
-    },[highlight])
-
+    }, [highlight]);
 
     function handleClick(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
         onClick && onClick(e);
