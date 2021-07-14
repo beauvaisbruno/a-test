@@ -1,4 +1,6 @@
 // eslint-disable-next-line
+import { encryptedValidation } from './constants';
+
 const IV = 16;
 const ALGORITHM = 'AES-GCM';
 
@@ -40,12 +42,51 @@ export async function getDerivation(password: string, iterations = 339616) {
     );
 }
 
-export function encrypt(key: CryptoKey, message: string) {
-    return message;
+export async function encrypt(key: CryptoKey, message: string) {
+    console.log('encrypt');
+    const messageBuffer = new TextEncoder().encode(message);
+    let encryptedMessage = await window.crypto.subtle.encrypt(
+        {
+            name: ALGORITHM,
+            iv: base64StringToUint8Array(encryptedValidation.iv),
+        },
+        key,
+        messageBuffer
+    );
+    return arrayBufferToBase64(encryptedMessage);
 }
 
-export function decrypt(key: CryptoKey, encryptedPasswords: string) {
-    return encryptedPasswords;
+export async function decrypt(key: CryptoKey, message: string) {
+    try {
+        const decryptedContent = await window.crypto.subtle.decrypt(
+            {
+                name: ALGORITHM,
+                iv: base64StringToUint8Array(encryptedValidation.iv),
+            },
+            key,
+            base64StringToUint8Array(message)
+        );
+        return new TextDecoder().decode(decryptedContent);
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+export async function validateMasterPassword(key: CryptoKey, { iv, cipher }: { iv: string; cipher: string }) {
+    try {
+        const decryptedContent = await window.crypto.subtle.decrypt(
+            {
+                name: ALGORITHM,
+                iv: base64StringToUint8Array(iv),
+            },
+            key,
+            base64StringToUint8Array(cipher)
+        );
+        return 'ok' === new TextDecoder().decode(decryptedContent);
+    } catch (error) {
+        console.log('error: ', error);
+    }
+    return false;
 }
 
 export async function getKey(rawKey: ArrayBuffer) {

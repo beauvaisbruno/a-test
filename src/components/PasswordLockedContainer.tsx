@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { CRYPTO_KEY_STORAGE_KEY, encryptedValidation } from '../constants';
 import { wait } from '../helpers';
-import { arrayBufferToBase64, decrypt, getDerivation, getKey } from '../crypto';
+import { arrayBufferToBase64, decrypt, getDerivation, getKey, validateMasterPassword } from '../crypto';
 import * as storage from '../storage';
 import classes from './PasswordLockedContainer.module.css';
 import Button from '../atoms/Button';
@@ -27,9 +27,11 @@ const PasswordLockedContainer = ({ onSuccess }: Props) => {
             const derivation = await getDerivation(password);
             const key = await getKey(derivation);
             await wait(500);
-            // await decrypt(key, encryptedValidation);
-            onSuccess(key);
-            storage.setItem(CRYPTO_KEY_STORAGE_KEY, arrayBufferToBase64(derivation));
+            if (await validateMasterPassword(key, encryptedValidation)) {
+                onSuccess(key);
+                storage.setItem(CRYPTO_KEY_STORAGE_KEY, arrayBufferToBase64(derivation));
+            }
+            console.error('Decrypt goes wrong');
         };
 
         setLoading(true);

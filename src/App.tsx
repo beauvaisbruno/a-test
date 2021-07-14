@@ -39,8 +39,11 @@ function App() {
             return;
         }
 
-        const decryptedPasswords = JSON.parse(await decrypt(newKey, encryptedPasswords));
-        setDecryptedPasswords(decryptedPasswords);
+        const jsonPasswords = await decrypt(newKey, encryptedPasswords);
+        if (!jsonPasswords) {
+            return;
+        }
+        setDecryptedPasswords(JSON.parse(jsonPasswords));
     }
 
     function handleSuccess(newKey: CryptoKey) {
