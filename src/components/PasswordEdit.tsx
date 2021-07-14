@@ -22,7 +22,7 @@ const UrlList = React.memo(({ urls, onDelete }: UrlListProps) => {
     return (
         <List className={classes.urlList}>
             {urls?.map((urlEntry, index) => (
-                <ListItem key={index} dense className={classes.urlListItem}>
+                <ListItem clickable key={index} dense className={classes.urlListItem}>
                     <input readOnly autoFocus value={urlEntry} />
                     <Icon
                         onKeyDown={(e) => isSpaceOrEnter(e) && onDelete(index)}

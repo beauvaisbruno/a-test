@@ -52,6 +52,7 @@ This section describes the functionality of the application if it were working a
 - Consider keyboard navigation throughout the application, as well as other accessibility concerns.
   - Add navigation using tab through the passwords list and the urls list
 - Improve the aesthetic aspect of the UI.
+  - add a pointer icon when the cursor is hover the buton to delete icon
   - Display date using local
 - PasswordEdit and PasswordView seem to have some code duplication, especially in terms of layout and css. Find a way to abstract that into some shared code.
   - Rename passwordEdit.module.css to passwordArea.module.cd and delete passwordView.module.css
