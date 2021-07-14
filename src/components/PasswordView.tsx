@@ -30,7 +30,7 @@ function PasswordView({ password, onEdit }: PasswordViewProps) {
                 <Labelled label="created at">{new Date(password.createdAt).toTimeString() || '-'}</Labelled>
 
                 <Labelled label="last modified at">
-                    {(password.lastModifiedAt && new Date(password.lastModifiedAt).toTimeString()) || '-'}
+                    {(password.lastModifiedAt && new Date(password.lastModifiedAt).toLocaleString()) || '-'}
                 </Labelled>
             </div>
 
