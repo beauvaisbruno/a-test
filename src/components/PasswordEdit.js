@@ -11,21 +11,24 @@ import ListItem from '../atoms/ListItem';
 import clsx from 'clsx';
 import TextArea from '../atoms/TextArea';
 
-const UrlList = React.memo(({ urls, onDelete }) => (
-    <List className={classes.urlList}>
-        {urls?.map((urlEntry, index) => (
-            <ListItem key={index} dense className={classes.urlListItem}>
-                <input readOnly autoFocus value={urlEntry} />
-                <Icon onClick={() => onDelete(index)} size="small" className="fas fa-times" />
-            </ListItem>
-        ))}
-        {urls?.length === 0 && (
-            <ListItem dense className={clsx(classes.urlListItem, classes.urlListItemEmpty)}>
-                No urls added
-            </ListItem>
-        )}
-    </List>
-));
+const UrlList = React.memo(({ urls, onDelete }) => {
+    console.log('refresh urls: ', urls);
+    return (
+        <List className={classes.urlList}>
+            {urls?.map((urlEntry, index) => (
+                <ListItem key={index} dense className={classes.urlListItem}>
+                    <input readOnly autoFocus value={urlEntry} />
+                    <Icon onClick={() => onDelete(index)} size="small" className="fas fa-times" />
+                </ListItem>
+            ))}
+            {urls?.length === 0 && (
+                <ListItem dense className={clsx(classes.urlListItem, classes.urlListItemEmpty)}>
+                    No urls added
+                </ListItem>
+            )}
+        </List>
+    );
+});
 
 function PasswordEdit({ password, onSave, onDelete, onCancel }) {
     const [values, setValues] = useState(password);
@@ -63,7 +66,7 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }) {
 
         urls.unshift(urlInput);
 
-        change({ url: urls });
+        change({ url: [...urls] });
 
         setUrlInput('');
     }
@@ -74,10 +77,12 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }) {
 
             urls.splice(index, 1);
 
-            change({ url: urls });
+            change({ url: [...urls] });
         },
         []
     );
+
+    console.log('values.url: ', values.url);
 
     return (
         <div className={classes.container}>
