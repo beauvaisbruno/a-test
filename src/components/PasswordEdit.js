@@ -12,7 +12,6 @@ import clsx from 'clsx';
 import TextArea from '../atoms/TextArea';
 
 const UrlList = React.memo(({ urls, onDelete }) => {
-
     return (
         <List className={classes.urlList}>
             {urls?.map((urlEntry, index) => (
@@ -71,9 +70,8 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }) {
         setUrlInput('');
     }
 
-    const handleUrlDelete = useCallback(
-        (index) => () => {
-            const urls = values.url || [];
+    const handleUrlDelete = useCallback((index) => {
+        const urls = values.url || [];
 
         urls.splice(index, 1);
 
