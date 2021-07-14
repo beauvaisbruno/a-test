@@ -52,8 +52,8 @@ This section describes the functionality of the application if it were working a
 - Consider keyboard navigation throughout the application, as well as other accessibility concerns.
   - Add navigation using tab through the passwords list and the urls list
 - Improve the aesthetic aspect of the UI.
+  - Check required value before to save password (name, password, double url, url format)
   - Add placeholders when editing password
-  - Check url format
   - Display error message when the password is wrong
   - Add a pointer icon when the cursor is hover the buton to delete icon
   - Display date using local

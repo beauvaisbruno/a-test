@@ -16,7 +16,10 @@ function createNewPassword() {
 
     return {
         id,
+        name: '',
         value: '',
+        createdAt: Date.now(),
+        url: [],
     } as Password;
 }
 

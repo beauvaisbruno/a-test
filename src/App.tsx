@@ -35,6 +35,7 @@ function App() {
         setKey(newKey);
         await wait(500);
         const encryptedPasswords = storage.getItem<string>(PASSWORDS_STORAGE_KEY);
+        console.log('encryptedPasswords', encryptedPasswords);
         if (!encryptedPasswords) {
             return;
         }

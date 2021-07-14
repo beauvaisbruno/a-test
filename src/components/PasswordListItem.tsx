@@ -15,7 +15,7 @@ interface PasswordListItemProps {
 function PasswordListItem({ name, vulnerable, ...rest }: PasswordListItemProps) {
     return (
         <ListItem clickable className={classes.listItem} {...rest}>
-            {name}
+            {name === '' ? 'New Password' : name}
             {vulnerable && <Icon size="small" className="fas fa-exclamation-triangle" />}
         </ListItem>
     );

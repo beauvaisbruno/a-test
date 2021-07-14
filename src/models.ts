@@ -4,6 +4,6 @@ export interface Password {
     description?: string;
     value: string;
     url: string[];
-    createdAt: number;
+    createdAt?: number;
     lastModifiedAt?: number;
 }

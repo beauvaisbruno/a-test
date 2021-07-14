@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { CRYPTO_KEY_STORAGE_KEY, encryptedValidation } from '../constants';
 import { wait } from '../helpers';
-import { arrayBufferToBase64, decrypt, getDerivation, getKey, validateMasterPassword } from '../crypto';
+import { arrayBufferToBase64, getDerivation, getKey, validateMasterPassword } from '../crypto';
 import * as storage from '../storage';
 import classes from './PasswordLockedContainer.module.css';
 import Button from '../atoms/Button';
@@ -45,7 +45,7 @@ const PasswordLockedContainer = ({ onSuccess }: Props) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
     };
-    console.log('error', error);
+
     return (
         <div className={classes.container}>
             <form className={classes.form} onSubmit={handleSubmit}>

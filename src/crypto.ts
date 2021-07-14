@@ -1,7 +1,6 @@
 // eslint-disable-next-line
 import { encryptedValidation } from './constants';
 
-const IV = 16;
 const ALGORITHM = 'AES-GCM';
 
 export function uint8ArrayToBase64String(array: Uint8Array) {

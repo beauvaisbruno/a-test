@@ -53,6 +53,7 @@ interface PasswordEditProps {
 function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProps) {
     const [values, setValues] = useState<Password>(password);
     const [error, setError] = useState<string | null>(null);
+    const [missingField, setMissingField] = useState<Array<string>>([]);
 
     const [urlInput, setUrlInput] = useState('');
 
@@ -68,10 +69,20 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
     }
 
     function handleSaveClick() {
+        const fields = [];
+        if (!values.name || values.name.trim().length === 0) {
+            fields.push('name');
+        }
+        if (!values.value || values.value.length === 0) {
+            fields.push('value');
+        }
+
+        setMissingField(fields);
+        if (fields.length > 0) return;
+
         onSave({
             ...password,
             ...values,
-            ...(password.createdAt ? {} : { createdAt: Date.now() }),
         });
     }
 
@@ -85,9 +96,14 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
 
     function handleUrlAdd() {
         if (!isValidURL(urlInput)) {
-            setError('Url mal-formatted');
+            setError('Mal-formatted url.');
             return;
         }
+        if (values.url.includes(urlInput)) {
+            setError('Url already present.');
+            return;
+        }
+        setError(null);
 
         const urls = values.url || [];
 
@@ -115,16 +131,33 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
                     name="name"
                     value={values.name}
                     onChange={handleChange}
-                    placeholder={'My super secret password'}
+                    placeholder={'My super secret password name'}
                 />
             </h2>
+            {missingField.includes('name') && (
+                <div className={classes.error}>The password name should not be empty</div>
+            )}
             <div className={classes.content}>
                 <Labelled label="description">
-                    <TextArea name="description" value={values.description} onChange={handleChange} placeholder={'The password for my bank accounts'}/>
+                    <TextArea
+                        name="description"
+                        value={values.description}
+                        onChange={handleChange}
+                        placeholder={'The password for my bank accounts'}
+                    />
                 </Labelled>
 
                 <Labelled label="value">
-                    <Input name="value" value={values.value} onChange={handleChange} type="password" placeholder="***********"/>
+                    <Input
+                        name="value"
+                        value={values.value}
+                        onChange={handleChange}
+                        type="password"
+                        placeholder="***********"
+                    />
+                    {missingField.includes('value') && (
+                        <div className={classes.error}>The password value should not be empty</div>
+                    )}
                 </Labelled>
 
                 <Labelled label="url">
@@ -135,9 +168,8 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
                             style={{ marginRight: 4 }}
                             placeholder={'https://www.my-awesome-bank.com'}
                         />
-                        {error && <div className={classes.error}>{error}</div>}
-
                         <Button onClick={handleUrlAdd}>Add</Button>
+                        {error && <div className={classes.error}>{error}</div>}
                     </div>
 
                     <UrlList urls={values.url} onDelete={handleUrlDelete} />
