@@ -10,8 +10,14 @@ import List from '../atoms/List';
 import ListItem from '../atoms/ListItem';
 import clsx from 'clsx';
 import TextArea from '../atoms/TextArea';
+import { Password } from '../models';
 
-const UrlList = React.memo(({ urls, onDelete }) => {
+interface UrlListProps {
+    urls: Array<string>;
+    onDelete: (index: number) => void;
+}
+
+const UrlList = React.memo(({ urls, onDelete }: UrlListProps) => {
     return (
         <List className={classes.urlList}>
             {urls?.map((urlEntry, index) => (
@@ -29,19 +35,26 @@ const UrlList = React.memo(({ urls, onDelete }) => {
     );
 });
 
-function PasswordEdit({ password, onSave, onDelete, onCancel }) {
-    const [values, setValues] = useState(password);
+interface PasswordEditProps {
+    password: Password;
+    onSave: (password: Password) => void;
+    onDelete: () => void;
+    onCancel: () => void;
+}
+
+function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProps) {
+    const [values, setValues] = useState<Password>(password);
 
     const [urlInput, setUrlInput] = useState('');
 
-    function change(partial) {
+    function change(partial: { [name: string]: string | Array<string> }) {
         setValues((values) => ({
             ...values,
             ...partial,
         }));
     }
 
-    function handleChange(e) {
+    function handleChange(e: React.ChangeEvent<any>) {
         change({ [e.target.name]: e.target.value });
     }
 
