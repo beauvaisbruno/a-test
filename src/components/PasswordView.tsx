@@ -27,7 +27,7 @@ function PasswordView({ password, onEdit }: PasswordViewProps) {
 
                 <Labelled label="url">{password.url.join(', ') || '-'}</Labelled>
 
-                <Labelled label="created at">{new Date(password.createdAt).toTimeString() || '-'}</Labelled>
+                <Labelled label="created at">{new Date(password.createdAt).toLocaleString() || '-'}</Labelled>
 
                 <Labelled label="last modified at">
                     {(password.lastModifiedAt && new Date(password.lastModifiedAt).toLocaleString()) || '-'}

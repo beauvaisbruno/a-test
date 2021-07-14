@@ -70,6 +70,7 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
         onSave({
             ...password,
             ...values,
+            ...(password.createdAt ? {} : { createdAt: Date.now() }),
         });
     }
 

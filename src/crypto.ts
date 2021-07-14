@@ -43,7 +43,6 @@ export async function getDerivation(password: string, iterations = 339616) {
 }
 
 export async function encrypt(key: CryptoKey, message: string) {
-    console.log('encrypt');
     const messageBuffer = new TextEncoder().encode(message);
     let encryptedMessage = await window.crypto.subtle.encrypt(
         {
