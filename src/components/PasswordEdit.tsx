@@ -11,7 +11,7 @@ import ListItem from '../atoms/ListItem';
 import clsx from 'clsx';
 import TextArea from '../atoms/TextArea';
 import { Password } from '../models';
-import { isSpaceOrEnter } from '../helpers';
+import { isSpaceOrEnter, isValidURL } from '../helpers';
 
 interface UrlListProps {
     urls: Array<string>;
@@ -52,6 +52,7 @@ interface PasswordEditProps {
 
 function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProps) {
     const [values, setValues] = useState<Password>(password);
+    const [error, setError] = useState<string | null>(null);
 
     const [urlInput, setUrlInput] = useState('');
 
@@ -83,6 +84,11 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
     }
 
     function handleUrlAdd() {
+        if (!isValidURL(urlInput)) {
+            setError('Url mal-formatted');
+            return;
+        }
+
         const urls = values.url || [];
 
         urls.unshift(urlInput);
@@ -127,6 +133,7 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
                             onChange={(e) => setUrlInput(e.target.value)}
                             style={{ marginRight: 4 }}
                         />
+                        {error && <div className={classes.error}>{error}</div>}
 
                         <Button onClick={handleUrlAdd}>Add</Button>
                     </div>
