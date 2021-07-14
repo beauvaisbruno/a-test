@@ -15,6 +15,7 @@ interface Props {
 const PasswordLockedContainer = ({ onSuccess }: Props) => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -31,17 +32,20 @@ const PasswordLockedContainer = ({ onSuccess }: Props) => {
                 onSuccess(key);
                 storage.setItem(CRYPTO_KEY_STORAGE_KEY, arrayBufferToBase64(derivation));
             }
-            console.error('Decrypt goes wrong');
+            throw Error('wrong password');
         };
 
         setLoading(true);
-        validate().catch(() => setLoading(false));
+        validate().catch(() => {
+            setLoading(false);
+            setError('Wrong password');
+        });
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
     };
-
+    console.log('error', error);
     return (
         <div className={classes.container}>
             <form className={classes.form} onSubmit={handleSubmit}>
@@ -54,6 +58,7 @@ const PasswordLockedContainer = ({ onSuccess }: Props) => {
                     type="password"
                     placeholder="***********"
                 />
+                {error && <div className={classes.error}>{error}</div>}
                 <Button disabled={loading}>Submit</Button>
             </form>
         </div>
