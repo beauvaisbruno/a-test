@@ -9,7 +9,22 @@ import PasswordLockedContainer from './components/PasswordLockedContainer';
 import PasswordMainContainer from './components/PasswordMainContainer';
 
 function duplicateUrlsAmongPasswords(passwords: { [id: string]: Password }) {
-    return null;
+
+    const duplicatedUrls: { [url: string]:Array<string> } = {};
+    const urlToPasswordId: { [url: string]:string } = {};
+    Object.values(passwords).forEach(password => {
+        password.url.forEach(url => {
+            if (Object.keys(urlToPasswordId).includes(url)){
+                if (!duplicatedUrls[url])
+                    duplicatedUrls[url] = [urlToPasswordId[url]+""];
+                duplicatedUrls[url].push(password.id+"");
+            }
+            urlToPasswordId[url] = password.id+"";
+        })
+    });
+    if (!Object.keys(duplicatedUrls).length)
+        return null;
+    return duplicatedUrls;
 }
 
 function App() {
@@ -93,13 +108,15 @@ function App() {
             },
         };
 
-        const duplicateUrls = duplicateUrlsAmongPasswords(decryptedPasswords);
+        const duplicateUrls = duplicateUrlsAmongPasswords(nextPasswords);
 
         if (duplicateUrls) {
-            /*
-             * if there are duplicate urls among the passwords alert a message such as
-             * 'Duplicate url "https://foobar.com" found for passwords "foo", "bar", "baz"'
-             */
+            let message = '';
+            Object.entries(duplicateUrls).forEach(([url, passwordIds]) =>{
+                const passwordNames = passwordIds.map((passwordId)=> '"'+nextPasswords[passwordId].name+'"').join(', ');
+                message += `Duplicate url ${url} found for passwords ${passwordNames}.\r\n`
+            });
+            window.alert(message);
         }
 
         setDecryptedPasswords(nextPasswords);
