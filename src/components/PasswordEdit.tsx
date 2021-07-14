@@ -115,15 +115,16 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
                     name="name"
                     value={values.name}
                     onChange={handleChange}
+                    placeholder={'My super secret password'}
                 />
             </h2>
             <div className={classes.content}>
                 <Labelled label="description">
-                    <TextArea name="description" value={values.description} onChange={handleChange} />
+                    <TextArea name="description" value={values.description} onChange={handleChange} placeholder={'The password for my bank accounts'}/>
                 </Labelled>
 
                 <Labelled label="value">
-                    <Input name="value" value={values.value} onChange={handleChange} />
+                    <Input name="value" value={values.value} onChange={handleChange} type="password" placeholder="***********"/>
                 </Labelled>
 
                 <Labelled label="url">
@@ -132,6 +133,7 @@ function PasswordEdit({ password, onSave, onDelete, onCancel }: PasswordEditProp
                             value={urlInput}
                             onChange={(e) => setUrlInput(e.target.value)}
                             style={{ marginRight: 4 }}
+                            placeholder={'https://www.my-awesome-bank.com'}
                         />
                         {error && <div className={classes.error}>{error}</div>}
 
