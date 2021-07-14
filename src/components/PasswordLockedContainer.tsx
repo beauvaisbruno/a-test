@@ -27,7 +27,7 @@ const PasswordLockedContainer = ({ onSuccess }: Props) => {
             const derivation = await getDerivation(password);
             const key = await getKey(derivation);
             await wait(500);
-            await decrypt(key, encryptedValidation);
+            // await decrypt(key, encryptedValidation);
             onSuccess(key);
             storage.setItem(CRYPTO_KEY_STORAGE_KEY, arrayBufferToBase64(derivation));
         };

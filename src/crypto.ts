@@ -41,14 +41,11 @@ export async function getDerivation(password: string, iterations = 339616) {
 }
 
 export function encrypt(key: CryptoKey, message: string) {
-    return {
-        iv: '',
-        cipher: message,
-    };
+    return message;
 }
 
-export function decrypt(key: CryptoKey, { iv, cipher }: { iv: string; cipher: string }) {
-    return cipher;
+export function decrypt(key: CryptoKey, encryptedPasswords: string) {
+    return encryptedPasswords;
 }
 
 export async function getKey(rawKey: ArrayBuffer) {

@@ -22,10 +22,11 @@ function App() {
     async function hydratePasswords(newKey: CryptoKey) {
         setKey(newKey);
         await wait(500);
-        const encryptedPasswords = JSON.parse(storage.getItem(PASSWORDS_STORAGE_KEY));
+        const encryptedPasswords = storage.getItem<string>(PASSWORDS_STORAGE_KEY);
         if (!encryptedPasswords) {
             return;
         }
+
         const decryptedPasswords = JSON.parse(await decrypt(newKey, encryptedPasswords));
         setDecryptedPasswords(decryptedPasswords);
     }
@@ -65,11 +66,11 @@ function App() {
             }
             const data = JSON.stringify(decryptedPasswords);
             const encryptedPasswords = await encrypt(key, data);
-            storage.setItem(PASSWORDS_STORAGE_KEY, JSON.stringify(encryptedPasswords));
+            storage.setItem(PASSWORDS_STORAGE_KEY, encryptedPasswords);
         }
 
         sync();
-    }, []);
+    }, [decryptedPasswords]);
 
     function handleLogout() {
         storage.removeItem(CRYPTO_KEY_STORAGE_KEY);
