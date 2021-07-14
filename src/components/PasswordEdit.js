@@ -14,8 +14,8 @@ import TextArea from '../atoms/TextArea';
 const UrlList = React.memo(({ urls, onDelete }) => (
     <List className={classes.urlList}>
         {urls?.map((urlEntry, index) => (
-            <ListItem dense className={classes.urlListItem}>
-                <input autoFocus value={urlEntry} />
+            <ListItem key={index} dense className={classes.urlListItem}>
+                <input readOnly autoFocus value={urlEntry} />
                 <Icon onClick={() => onDelete(index)} size="small" className="fas fa-times" />
             </ListItem>
         ))}
